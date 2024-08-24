@@ -1,6 +1,6 @@
 name: qiita_search
 description: "A new Flutter project."
-publish_to: 'none'
+publish_to: "none"
 version: 0.1.0
 
 environment:
@@ -9,6 +9,10 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_dotenv: ^5.1.0
+  http: ^1.2.2
+  intl: ^0.19.0
+  webview_flutter: ^4.9.0
 
 dev_dependencies:
   flutter_test:
@@ -17,3 +21,5 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets:
+    - .env
