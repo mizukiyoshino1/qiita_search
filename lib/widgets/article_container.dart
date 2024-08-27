@@ -26,7 +26,7 @@ class ArticleContainer extends StatelessWidget {
     return Text(
       DateFormat('yyyy/MM/dd').format(article.createdAt),
       style: const TextStyle(
-        color: Colors.white70,
+        color: Colors.black54,
         fontSize: 12,
       ),
     );
@@ -41,7 +41,7 @@ class ArticleContainer extends StatelessWidget {
       style: const TextStyle(
         fontSize: 16,
         fontWeight: FontWeight.bold,
-        color: Colors.white,
+        color: Colors.black87,
       ),
     );
   }
@@ -52,7 +52,7 @@ class ArticleContainer extends StatelessWidget {
       '#${article.tags.join(' #')}',
       style: const TextStyle(
         fontSize: 12,
-        color: Colors.white70,
+        color: Colors.black54,
         fontStyle: FontStyle.italic,
       ),
     );
@@ -62,11 +62,11 @@ class ArticleContainer extends StatelessWidget {
   Widget _buildLikeInfo() {
     return Row(
       children: [
-        const Icon(Icons.favorite, color: Colors.white70),
+        const Icon(Icons.favorite, color: Colors.black54),
         const SizedBox(width: 4),
         Text(
           article.likesCount.toString(),
-          style: const TextStyle(fontSize: 12, color: Colors.white70),
+          style: const TextStyle(fontSize: 12, color: Colors.black54),
         ),
       ],
     );
@@ -74,17 +74,22 @@ class ArticleContainer extends StatelessWidget {
 
   /// 投稿者情報表示用ウィジェット
   Widget _buildUserInfo() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.end,
+    return Row(
       children: [
         CircleAvatar(
-          radius: 26,
+          radius: 18,
           backgroundImage: NetworkImage(article.user.profileImageUrl),
         ),
-        const SizedBox(height: 4),
-        Text(
-          article.user.id,
-          style: const TextStyle(color: Colors.white70, fontSize: 12),
+        const SizedBox(width: 8),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              article.user.id,
+              style: const TextStyle(color: Colors.black87, fontSize: 14),
+            ),
+            _buildDateText(), // 日付をユーザー名の下に配置
+          ],
         ),
       ],
     );
@@ -99,26 +104,28 @@ class ArticleContainer extends StatelessWidget {
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
           decoration: BoxDecoration(
-            color: Color(0xFF55C500), // 背景色
-            borderRadius: BorderRadius.circular(20), // 角丸
+            color: Colors.white, // 背景色を白に変更
+            borderRadius: BorderRadius.circular(10), // 角丸を少し小さく調整
+            boxShadow: [
+              // ボックスシャドウを追加してカード風にする
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.3),
+                spreadRadius: 2,
+                blurRadius: 5,
+                offset: Offset(0, 3),
+              ),
+            ],
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _buildDateText(),
+              _buildUserInfo(), // ユーザー情報を上部に配置
               const SizedBox(height: 8),
-              _buildTitleText(),
+              _buildTitleText(), // タイトルを中間に配置
               const SizedBox(height: 8),
-              _buildTagsText(),
+              _buildTagsText(), // タグをタイトルの下に配置
               const SizedBox(height: 16),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  _buildLikeInfo(),
-                  _buildUserInfo(),
-                ],
-              ),
+              _buildLikeInfo(), // いいね情報を下部に配置
             ],
           ),
         ),
