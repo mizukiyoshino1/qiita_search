@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "633096367339",
+    "project_id": "qiita-search-51a40",
+    "storage_bucket": "qiita-search-51a40.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:633096367339:android:268fda356e7680fcb6a2ae",
+        "android_client_info": {
+          "package_name": "com.example.qiita_search"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBWizT_BMFWuxyhzC1iWae9oyKers3AdFU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

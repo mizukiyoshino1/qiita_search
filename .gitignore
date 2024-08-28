@@ -44,3 +44,8 @@ app.*.map.json
 
 # .envファイルを追加
 .env
+
+# firebase
+firebase_options.dart
+firebase.json
+.firebaserc

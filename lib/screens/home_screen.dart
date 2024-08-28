@@ -2,11 +2,12 @@ import 'dart:convert';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:qiita_search/models/article.dart';
 import 'package:qiita_search/widgets/article_container.dart';
 import 'package:qiita_search/widgets/common_navigation_bar.dart';
 
-/// 記事の最新方法を表示する画面
+/// 記事の最新情報を表示する画面
 class HomeScreen extends StatefulWidget {
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -16,6 +17,7 @@ class _HomeScreenState extends State<HomeScreen> {
   List<Article> articles = [];
   int _currentPage = 1;
   bool _isLoading = false;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   @override
   void initState() {
@@ -61,11 +63,61 @@ class _HomeScreenState extends State<HomeScreen> {
     _fetchArticles();
   }
 
+  // ログアウト処理
+  Future<void> _signOut(BuildContext context) async {
+    final shouldLogout = await showDialog<bool>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text(
+            'Confirm Logout',
+            style: TextStyle(color: Colors.black),
+          ),
+          content: const Text(
+            'Are you sure you want to log out?',
+            style: TextStyle(color: Colors.black),
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(false);
+              },
+              child: const Text(
+                'Cancel',
+                style: TextStyle(color: Colors.blue),
+              ),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(true);
+              },
+              child: const Text(
+                'Logout',
+                style: TextStyle(color: Colors.red),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+
+    if (shouldLogout ?? false) {
+      await _auth.signOut();
+      Navigator.pushReplacementNamed(context, '/login');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Home'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.logout),
+            onPressed: () => _signOut(context),
+          ),
+        ],
       ),
       body: _isLoading && articles.isEmpty
           ? const Center(child: CircularProgressIndicator())
