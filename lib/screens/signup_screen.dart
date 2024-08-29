@@ -15,6 +15,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final _formKey = GlobalKey<FormState>();
   bool _isLoading = false;
 
+  // ユーザーの新規登録処理
   Future<void> _register() async {
     if (!_formKey.currentState!.validate()) return;
 
